@@ -5,3 +5,17 @@
     <p>{{ film_id.quantity }}</p>
     <iframe src="{{ film_id.trailer }}" frameborder="0"></iframe>
     <p>{{ film_id.created_at }}</p>
+
+
+    <h3>Средняя оценка по отзывам </h3>
+    <ul>
+      {% for i in film_id.reviews.all %}
+
+      <li>
+        <p>Оценка : {{ i.mark }} </p>
+        <p>{{ i.review_text }} </p>
+        <p> {{i.created_at }} </p>
+      </li>
+
+      {% endfor %}
+    </ul>

@@ -1,11 +1,22 @@
 <h1>Список книг</h1>
-<ul>
-  {% for book in books %}
-    <li>
-      <a href="{{ book.id }}/">{{ book.title }}</a>
-    </li>
-  {% endfor %}
-</ul>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+{% for book in books %}
+  <div style="width: 300px; text-align: center; margin: 20px; border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
+      <h2><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></h2>
+      
+      {% if book.image %}
+        <img src="{{ book.image.url }}" alt="{{ book.title }}" width="250" height="350">
+      {% else %}
+        <p><i>Обложка отсутствует</i></p>
+      {% endif %}
+      
+      <p><b>Автор:</b> {{ book.author }}</p>
+      <p><b>Добавлено:</b> {{ book.created_at|date:"d.m.Y" }}</p>
+      <p>{{ book.description|truncatewords:20 }}</p>
 
-
-
+      <a href="{% url 'book_detail' book.id %}">Подробнее</a>
+  </div>
+{% empty %}
+  <p>Пока нет книг 😔</p>
+{% endfor %}
+</div>

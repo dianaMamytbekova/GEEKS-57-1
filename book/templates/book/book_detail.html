@@ -1,6 +1,23 @@
-<h1>{{ book_id.title }}</h1>
-<p>{{ book_id.description }}</p>
-<img src="{{ book_id.image.url }}" alt="{{ book.title }}">
-<p>Автор: {{ book_id.author }}</p>
-<p>Страниц: {{ book_id.quantity_page }}</p>
-<a href="{{ book_id.book_audio }}">Слушать аудиокнигу</a>
+<h1 style="text-align: center; font-size: 28px; margin-bottom: 20px;">{{ book_id.title }}</h1>
+<div style="text-align: center; margin-bottom: 20px;">
+<img src="{{ book_id.image.url }}" alt="{{ book_id.title }}" style="width: 250px; height: auto; border-radius: 10px;">
+
+<p style="font-size: 16px; margin: 5px 0;">{{ book_id.description }}</p>
+<p style="font-size: 16px; margin: 5px 0;"><strong>Автор:</strong> {{ book_id.author }}</p>
+<p style="font-size: 16px; margin: 5px 0;"><strong>Количество страниц:</strong> {{ book_id.quantity_page }}</p>
+<p style="font-size: 20px; margin: 5px 0;"><a href="{{ book_id.book_audio }}" target="_blank">Слушать аудио версию</a></p>
+<p style="font-size: 16px; margin: 10px 0;"><strong>Средняя оценка:</strong> {{ avg }}</p>
+
+
+<h3 style="font-size: 22px; margin-top: 30px;">Отзывы:</h3>
+
+{% for review in reviews %}
+  <div style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+      <p style="font-size: 16px;"><strong>Оценка:</strong> {{ review.mark }}</p>
+      <p style="font-size: 16px;">{{ review.review_text }}</p>
+      <p style="font-size: 14px; color: #555;"><em>Дата: {{ review.created_at }}</em></p>
+  </div>
+{% empty %}
+  <p>Пока нет отзывов для этой книги.</p>
+{% endfor %}
+</div>

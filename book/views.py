@@ -13,9 +13,19 @@ def book_list_view(request):
 def book_detail_view(request, id):
     if request.method == 'GET':
         book_id = get_object_or_404(models.Book, id=id)  
+        reviews = book_id.reviews.all() 
+
+        if reviews.exists():
+            avg = sum([r.mark for r in reviews]) / reviews.count()
+            avg = round(avg, 1)
+        else:
+            avg = 'Нет оценок'
+
         context = {
-            'book_id': book_id
+            'book_id': book_id,
+            'reviews': reviews,
+            'avg': avg,
         }
-        return render(request, 'book/book_detail.html', context)
+        return render(request, template_name='book/book_detail.html', context=context)
 
 
