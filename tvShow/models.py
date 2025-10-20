@@ -69,7 +69,7 @@ class Car(models.Model):
         return f'{self.brand_car} - {self.passport.name}'
     
     class Meta:
-        verbose_name = 'машину'
+        verbose_name = 'машина'
         verbose_name_plural = 'машины'
 
 
