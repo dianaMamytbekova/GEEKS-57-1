@@ -31,3 +31,6 @@
     </div>
   </div>
 </nav>
+{% if user.is_authenticated %}
+  <span>{{ user.first_name|default:user.username|slice:":1" }}{{ user.last_name|default:""|slice:":1" }}</span>
+{% endif %}

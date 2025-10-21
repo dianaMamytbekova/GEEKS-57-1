@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ movie.title }}</h1>
+<p>{{ movie.description }}</p>
+<p>Жанр: {{ movie.genre }}</p>
+<p>Рейтинг: {{ movie.avg_rating|floatformat:1 }}</p>
+
+{% if user.is_authenticated %}
+  <h3>Оставить комментарий</h3>
+  <form action="{% url 'cineboard:add_comment' movie.pk %}" method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Отправить</button>
+  </form>
+
+  <h3>Оценить фильм</h3>
+  <form action="{% url 'cineboard:add_rating' movie.pk %}" method="post">
+    {% csrf_token %}
+    {{ rating_form.as_p }}
+    <button type="submit">Поставить оценку</button>
+  </form>
+{% else %}
+  <p><a href="{% url 'login' %}">Войдите</a>, чтобы комментировать и оценивать.</p>
+{% endif %}
+
+<h3>Комментарии</h3>
+<ul>
+  {% for c in comments %}
+    <li>{{ c.user }}: {{ c.text }} ({{ c.created_at }})</li>
+  {% empty %}<li>Комментариев нет</li>{% endfor %}
+</ul>
+
+{% endblock %}

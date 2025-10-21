@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Фильмы</h1>
+
+<form method="get">
+  <input type="text" name="q" placeholder="Поиск..." value="{{ request.GET.q }}">
+  <button type="submit">Поиск</button>
+</form>
+
+<nav>
+  <a href="{% url 'cineboard:movie_list' %}">Все</a>
+  {% for g in genres %}
+    <a href="{% url 'cineboard:movies_by_genre' g.slug %}">{{ g.name }}</a>
+  {% endfor %}
+</nav>
+
+<ul>
+  {% for movie in movies %}
+    <li>
+      <a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a>
+      — рейтинг: {{ movie.avg_rating|floatformat:1 }}
+    </li>
+  {% empty %} <li>Нет фильмов</li> {% endfor %}
+</ul>
+
+{% if is_paginated %}
+  <div>
+    {% if page_obj.has_previous %}
+      <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Назад</a>
+    {% endif %}
+    <span>Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Вперед</a>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% endblock %}
