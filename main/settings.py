@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'tvShow',
     'book',
     'students',
+    'basket',
 ]
 
 MIDDLEWARE = [

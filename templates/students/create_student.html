@@ -1,0 +1,8 @@
+<h1>Заполните анкету</h1>
+<form action="/create_student/" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit"> Добавить анкету </button>
+
+
+</form>
