@@ -1,0 +1,19 @@
+<h1>Вся одежда</h1>
+
+<form method="GET" action="">
+  <input type="text" name="q" placeholder="Поиск по названию..." value="{{ request.GET.q }}">
+  <button type="submit">Поиск</button>
+</form>
+
+<ul>
+  {% for c in clothes %}
+    <li>
+      <h3>{{ c.title }}</h3>
+      <img src="{{ c.image }}" width="200">
+      <p>{{ c.description }}</p>
+      <p><b>{{ c.price }} сом</b></p>
+    </li>
+  {% empty %}
+    <p>Ничего не найдено.</p>
+  {% endfor %}
+</ul>
